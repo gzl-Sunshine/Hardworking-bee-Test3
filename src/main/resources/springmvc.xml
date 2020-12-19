@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启包扫描-->
+    <context:component-scan base-package="com.bees">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--配置视图解析器-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    
+    <!--配置文件解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    </bean>
+
+
+    <!--设置静态资源不过滤-->
+
+    <!--
+    location:指location指定的目录不要拦截，直接请求，这里指在根目录下的resources文件下的所有文件
+    mapping:值在resources文件下的所有文件(**代表所有文件)
+    所有意思就是在跟目录下resources的所有文件不会被DispatcherServlet拦截，直接访问，当做静态资源交给Servlet处理
+    -->
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <!--开启springmvc的注解支持-->
+    <mvc:annotation-driven/>
+</beans>
